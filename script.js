@@ -132,10 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('active');
-        // If it's a skill circle, trigger its fill animation
-        if (entry.target.classList.contains('skill-progress-item')) {
-          animateRadialProgress(entry.target);
-        }
         revealObserver.unobserve(entry.target); // Trigger only once
       }
     });
@@ -145,23 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   revealElements.forEach(el => revealObserver.observe(el));
-
-  /* ----------------------------------
-     RADIAL PROGRESS BAR ANIMATION
-  ---------------------------------- */
-  function animateRadialProgress(item) {
-    const circle = item.querySelector('.radial-progress-circle');
-    if (!circle) return;
-    
-    const percent = parseInt(item.dataset.percent || '0', 10);
-    const radius = 45;
-    const circumference = 2 * Math.PI * radius; // 282.74
-    
-    const offset = circumference - (percent / 100) * circumference;
-    
-    // Animate strokeDashoffset
-    circle.style.strokeDashoffset = offset;
-  }
 
   /* ----------------------------------
      PORTFOLIO CATEGORY FILTERING

@@ -241,77 +241,84 @@
         </div>
       </div>
       
-      <!-- Radial progress meters -->
-      <div class="row mt-5">
+      <!-- Technical Competence List (Resume-style progress bars) -->
+      <div class="row mt-5 justify-content-center">
         <div class="col-12 text-center mt-4">
           <h4 class="font-mono text-white mb-4">// Technical Competence Metrics</h4>
         </div>
-        <div class="col-12">
-          <div class="skills-container">
+        <div class="col-lg-9 col-md-10">
+          <div class="skills-list d-flex flex-column gap-4">
+            
             <!-- Skill 1 -->
-            <div class="skill-progress-item scroll-reveal" data-percent="95">
-              <div class="radial-progress-wrapper">
-                <svg class="radial-progress-svg">
-                  <circle class="radial-bg-circle" cx="55" cy="55" r="45"></circle>
-                  <circle class="radial-progress-circle" cx="55" cy="55" r="45"></circle>
-                </svg>
-                <div class="skill-icon-center"><i class="fa-solid fa-shield-halved"></i></div>
+            <div class="skill-list-item scroll-reveal" style="--progress-width: 95%;">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="skill-icon text-orange"><i class="fa-solid fa-shield-halved"></i></span>
+                  <span class="skill-name text-white fw-semibold">Cybersecurity</span>
+                </div>
+                <span class="skill-percentage font-mono text-orange">95%</span>
               </div>
-              <div class="skill-percent">95%</div>
-              <div class="skill-label">Cybersecurity</div>
+              <div class="progress-bar-container glass-card">
+                <div class="progress-bar-fill"></div>
+              </div>
             </div>
             
             <!-- Skill 2 -->
-            <div class="skill-progress-item scroll-reveal" data-percent="90">
-              <div class="radial-progress-wrapper">
-                <svg class="radial-progress-svg">
-                  <circle class="radial-bg-circle" cx="55" cy="55" r="45"></circle>
-                  <circle class="radial-progress-circle" cx="55" cy="55" r="45"></circle>
-                </svg>
-                <div class="skill-icon-center"><i class="fab fa-linux"></i></div>
+            <div class="skill-list-item scroll-reveal" style="--progress-width: 90%;">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="skill-icon text-orange"><i class="fab fa-linux"></i></span>
+                  <span class="skill-name text-white fw-semibold">Linux Systems</span>
+                </div>
+                <span class="skill-percentage font-mono text-orange">90%</span>
               </div>
-              <div class="skill-percent">90%</div>
-              <div class="skill-label">Linux Systems</div>
+              <div class="progress-bar-container glass-card">
+                <div class="progress-bar-fill"></div>
+              </div>
             </div>
             
             <!-- Skill 3 -->
-            <div class="skill-progress-item scroll-reveal" data-percent="92">
-              <div class="radial-progress-wrapper">
-                <svg class="radial-progress-svg">
-                  <circle class="radial-bg-circle" cx="55" cy="55" r="45"></circle>
-                  <circle class="radial-progress-circle" cx="55" cy="55" r="45"></circle>
-                </svg>
-                <div class="skill-icon-center"><i class="fa-solid fa-network-wired"></i></div>
+            <div class="skill-list-item scroll-reveal" style="--progress-width: 92%;">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="skill-icon text-orange"><i class="fa-solid fa-network-wired"></i></span>
+                  <span class="skill-name text-white fw-semibold">Packet Analysis</span>
+                </div>
+                <span class="skill-percentage font-mono text-orange">92%</span>
               </div>
-              <div class="skill-percent">92%</div>
-              <div class="skill-label">Packet Analysis</div>
+              <div class="progress-bar-container glass-card">
+                <div class="progress-bar-fill"></div>
+              </div>
             </div>
             
             <!-- Skill 4 -->
-            <div class="skill-progress-item scroll-reveal" data-percent="85">
-              <div class="radial-progress-wrapper">
-                <svg class="radial-progress-svg">
-                  <circle class="radial-bg-circle" cx="55" cy="55" r="45"></circle>
-                  <circle class="radial-progress-circle" cx="55" cy="55" r="45"></circle>
-                </svg>
-                <div class="skill-icon-center"><i class="fab fa-python"></i></div>
+            <div class="skill-list-item scroll-reveal" style="--progress-width: 85%;">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="skill-icon text-orange"><i class="fab fa-python"></i></span>
+                  <span class="skill-name text-white fw-semibold">Python &amp; C</span>
+                </div>
+                <span class="skill-percentage font-mono text-orange">85%</span>
               </div>
-              <div class="skill-percent">85%</div>
-              <div class="skill-label">Python &amp; C</div>
+              <div class="progress-bar-container glass-card">
+                <div class="progress-bar-fill"></div>
+              </div>
             </div>
             
             <!-- Skill 5 -->
-            <div class="skill-progress-item scroll-reveal" data-percent="80">
-              <div class="radial-progress-wrapper">
-                <svg class="radial-progress-svg">
-                  <circle class="radial-bg-circle" cx="55" cy="55" r="45"></circle>
-                  <circle class="radial-progress-circle" cx="55" cy="55" r="45"></circle>
-                </svg>
-                <div class="skill-icon-center"><i class="fab fa-docker"></i></div>
+            <div class="skill-list-item scroll-reveal" style="--progress-width: 80%;">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex align-items-center gap-2">
+                  <span class="skill-icon text-orange"><i class="fab fa-docker"></i></span>
+                  <span class="skill-name text-white fw-semibold">Containers/Git</span>
+                </div>
+                <span class="skill-percentage font-mono text-orange">80%</span>
               </div>
-              <div class="skill-percent">80%</div>
-              <div class="skill-label">Containers/Git</div>
+              <div class="progress-bar-container glass-card">
+                <div class="progress-bar-fill"></div>
+              </div>
             </div>
+            
           </div>
         </div>
       </div>
