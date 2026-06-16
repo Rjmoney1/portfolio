@@ -11,5 +11,20 @@ const PORTFOLIO_CONFIG = {
   contactInfo: {
     email: "rrajamanikandan7@gmail.com",
     phone: "8122850816"
+  },
+  
+  // Contact form submission routing service
+  contactFormService: {
+    // Supported providers: "simulation" (local test), "web3forms" (direct to email), or "formspree" (direct to email)
+    // To receive messages in your inbox, change "simulation" to "web3forms" and paste your Access Key below.
+    provider: "web3forms",
+    
+    // Web3Forms configuration (https://web3forms.com - free, no registration required, just submit your email on their site to get a key)
+    // Paste your Web3Forms Access Key here:
+    web3FormsAccessKey: "YOUR_WEB3FORMS_ACCESS_KEY_HERE",
+    
+    // Formspree configuration (https://formspree.io - alternative option)
+    // Paste your Formspree Form ID or URL here:
+    formspreeUrl: ""
   }
 };

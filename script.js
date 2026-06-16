@@ -85,44 +85,81 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ----------------------------------
-     PARALLAX MOVING BACKGROUND ORBS
+     HIGH-PERFORMANCE PARALLAX ENGINE & VANTA BACKGROUND
   ---------------------------------- */
   const bgGrid = document.querySelector('.bg-grid');
   const orbs = document.querySelectorAll('.bg-orb');
 
-  // Store the default top value of each orb based on computed styles
-  orbs.forEach((orb) => {
-    orb.dataset.defaultTop = window.getComputedStyle(orb).top;
-  });
+  // Initialize Vanta Dots effect on the bg-ambient container
+  let vantaEffect = null;
+  try {
+    vantaEffect = VANTA.DOTS({
+      el: ".bg-ambient",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.00,
+      scaleMobile: 1.00,
+      color: 0xff8820,            // Orange dots
+      color2: 0xff8820,           // Orange lines
+      size: 2.00,                 // Dots size (smaller)
+      spacing: 28.00,             // Dots spacing (tighter)
+      showLines: true,            // Connecting lines
+      backgroundColor: 0x222222,   // Solid gray background
+      backgroundAlpha: 1.00        // Solid background
+    });
+  } catch (err) {
+    console.error("Vanta Dots failed to initialize:", err);
+  }
 
+  // Parallax animation state variables
+  let targetMouseX = 0;
+  let targetMouseY = 0;
+  let currentMouseX = 0;
+  let currentMouseY = 0;
+
+  let targetScrollY = 0;
+  let currentScrollY = 0;
+
+  // Listen to mouse movement and normalize from -0.5 to 0.5
   window.addEventListener('mousemove', (e) => {
-    const mouseX = e.clientX / window.innerWidth - 0.5;
-    const mouseY = e.clientY / window.innerHeight - 0.5;
-    
-    orbs.forEach((orb, index) => {
-      const depth = (index + 1) * 35;
-      orb.style.transform = `translate(${mouseX * depth}px, ${mouseY * depth}px)`;
-    });
-    
-    if (bgGrid) {
-      bgGrid.style.transform = `translate(${mouseX * 12}px, ${mouseY * 12}px)`;
-    }
+    targetMouseX = e.clientX / window.innerWidth - 0.5;
+    targetMouseY = e.clientY / window.innerHeight - 0.5;
   });
 
+  // Track scroll position
   window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
+    targetScrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+  }, { passive: true });
+
+  // Unified loop using requestAnimationFrame and linear interpolation (lerping)
+  function animate() {
+    // 1. Lerp mouse & scroll coordinates for fluid, high-refresh rate movement
+    currentMouseX += (targetMouseX - currentMouseX) * 0.08;
+    currentMouseY += (targetMouseY - currentMouseY) * 0.08;
+    currentScrollY += (targetScrollY - currentScrollY) * 0.08;
+
+    // 2. Animate Ambient Orbs (Smooth translate3d runs on GPU)
     orbs.forEach((orb, index) => {
-      const scrollSpeed = (index + 1) * 0.15;
-      const defaultTopVal = parseFloat(orb.dataset.defaultTop) || 0;
-      // If defaultTop was defined in % or px, parse correctly or fallback to raw px
-      const defaultTopStr = orb.dataset.defaultTop || '0px';
-      if (defaultTopStr.includes('%')) {
-        orb.style.top = `calc(${defaultTopStr} + ${scrolled * scrollSpeed}px)`;
-      } else {
-        orb.style.top = `${defaultTopVal + scrolled * scrollSpeed}px`;
-      }
+      const mouseSpeed = (index + 1) * 25;
+      const scrollSpeed = (index + 1) * 0.12 + 0.08; // Upward parallax scroll speed
+      orb.style.transform = `translate3d(${currentMouseX * mouseSpeed}px, ${-currentScrollY * scrollSpeed + currentMouseY * mouseSpeed}px, 0)`;
     });
-  });
+
+    // 3. Animate Digital Grid (3D tilt + translation)
+    if (bgGrid) {
+      const gridMouseSpeed = 15;
+      const gridScrollSpeed = 0.06;
+      bgGrid.style.transform = `translate3d(${currentMouseX * gridMouseSpeed}px, ${-currentScrollY * gridScrollSpeed + currentMouseY * gridMouseSpeed}px, 0) rotateX(${-currentMouseY * 3}deg) rotateY(${currentMouseX * 3}deg)`;
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  // Run the animation loop
+  requestAnimationFrame(animate);
 
   /* ----------------------------------
      SCROLL REVEAL TRIGGERS
@@ -209,60 +246,4 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', activeNavLinkOnScroll);
   window.addEventListener('load', activeNavLinkOnScroll);
 
-  /* ----------------------------------
-     CONTACT FORM SUBMIT HANDLER
-  ---------------------------------- */
-  const contactForm = document.getElementById('portfolioContactForm');
-  if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      // Get values
-      const name = document.getElementById('formName').value;
-      const email = document.getElementById('formEmail').value;
-      const message = document.getElementById('formMessage').value;
-      
-      // Simple validation
-      if (!name || !email || !message) {
-        alert('Please fill out all required fields.');
-        return;
-      }
-      
-      // Change button state
-      const submitBtn = contactForm.querySelector('button[type="submit"]');
-      const originalText = submitBtn.innerHTML;
-      submitBtn.innerHTML = 'Sending... <i class="fas fa-spinner fa-spin ms-1"></i>';
-      submitBtn.disabled = true;
-      
-      // Simulate API call
-      setTimeout(() => {
-        // Success notification modal or alert
-        const alertBox = document.createElement('div');
-        alertBox.className = 'alert alert-success glass-card mt-3 border-success text-white p-3 entry-anim-1';
-        alertBox.style.background = 'rgba(40, 167, 69, 0.15)';
-        alertBox.style.borderColor = 'rgba(40, 167, 69, 0.4)';
-        alertBox.innerHTML = `
-          <h5 class="alert-heading text-success mb-1 font-mono">✓ ACCESS GRANTED</h5>
-          <p class="mb-0 small text-muted">Message transmitted successfully. Thank you, ${name}. I will contact you shortly.</p>
-        `;
-        
-        contactForm.appendChild(alertBox);
-        
-        // Reset form
-        contactForm.reset();
-        
-        submitBtn.innerHTML = originalText;
-        submitBtn.disabled = false;
-        
-        // Remove alert after 5s
-        setTimeout(() => {
-          alertBox.style.opacity = '0';
-          alertBox.style.transform = 'translateY(10px)';
-          alertBox.style.transition = 'all 0.5s';
-          setTimeout(() => alertBox.remove(), 500);
-        }, 5000);
-        
-      }, 1500);
-    });
-  }
 });
